@@ -46,6 +46,14 @@ public interface ICodeMining {
 	Position getPosition();
 
 	/**
+	 * Stick the annotation to the next char. This overrides the default behavior of sticking to the
+	 * previous char
+	 *
+	 * @param preferDrawingLeftToNextChar true if the code mining should stick to the next char.
+	 */
+	boolean getPreferDrawingLeftToNextChar();
+
+	/**
 	 * Returns the owner provider which has created this mining.
 	 *
 	 * @return the owner provider which has created this mining.

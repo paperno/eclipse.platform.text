@@ -39,14 +39,18 @@ public class LineContentAnnotation extends AbstractInlinedAnnotation {
 
 	private int redrawnCharacterWidth;
 
+	private boolean preferDrawingLeftToNextChar;
+
 	/**
 	 * Line content annotation constructor.
 	 *
 	 * @param position the position where the annotation must be drawn.
-	 * @param viewer   the {@link ISourceViewer} where the annotation must be drawn.
+	 * @param preferDrawingLeftToNextChar stick the annotation to the next char
+	 * @param viewer the {@link ISourceViewer} where the annotation must be drawn.
 	 */
-	public LineContentAnnotation(Position position, ISourceViewer viewer) {
+	public LineContentAnnotation(Position position, boolean preferDrawingLeftToNextChar, ISourceViewer viewer) {
 		super(position, viewer);
+		this.preferDrawingLeftToNextChar= preferDrawingLeftToNextChar;
 	}
 
 	/**
@@ -154,8 +158,13 @@ public class LineContentAnnotation extends AbstractInlinedAnnotation {
 	}
 
 	boolean drawRightToPreviousChar(int widgetOffset) {
-		return widgetOffset > 0 &&
-				getTextWidget().getLineAtOffset(widgetOffset) == getTextWidget().getLineAtOffset(widgetOffset - 1);
+		StyledText widget= getTextWidget();
+		int widgetLine= widget.getLineAtOffset(widgetOffset);
+		boolean shouldDrawLeftToNextChar= preferDrawingLeftToNextChar
+				&& widgetOffset < getTextWidget().getOffsetAtLine(widgetLine) + getTextWidget().getLine(widgetLine).length();
+		return widgetOffset > 0
+				&& widgetLine == getTextWidget().getLineAtOffset(widgetOffset - 1)
+				&& !shouldDrawLeftToNextChar;
 	}
 
 }

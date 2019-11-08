@@ -40,6 +40,11 @@ public abstract class AbstractCodeMining implements ICodeMining {
 	private final Position position;
 
 	/**
+	 * Stick the annotation to the next char
+	 */
+	private boolean preferDrawingLeftToNextChar;
+
+	/**
 	 * The owner codemining provider which creates this mining.
 	 */
 	private final ICodeMiningProvider provider;
@@ -75,6 +80,21 @@ public abstract class AbstractCodeMining implements ICodeMining {
 	@Override
 	public Position getPosition() {
 		return position;
+	}
+
+	@Override
+	public boolean getPreferDrawingLeftToNextChar() {
+		return preferDrawingLeftToNextChar;
+	}
+
+	/**
+	 * Stick the annotation to the next char. This overrides the default behavior of sticking to the
+	 * previous char
+	 *
+	 * @param preferDrawingLeftToNextChar true if the code mining should stick to the next char.
+	 */
+	public void setPreferDrawingLeftToNextChar(boolean preferDrawingLeftToNextChar) {
+		this.preferDrawingLeftToNextChar= preferDrawingLeftToNextChar;
 	}
 
 	@Override

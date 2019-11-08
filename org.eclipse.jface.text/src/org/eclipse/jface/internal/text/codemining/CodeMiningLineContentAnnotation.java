@@ -65,10 +65,11 @@ public class CodeMiningLineContentAnnotation extends LineContentAnnotation imple
 	 * Code mining annotation constructor.
 	 *
 	 * @param position the position
-	 * @param viewer   the viewer
+	 * @param preferDrawingLeftToNextChar stick the annotation to the next char
+	 * @param viewer the viewer
 	 */
-	public CodeMiningLineContentAnnotation(Position position, ISourceViewer viewer) {
-		super(position, viewer);
+	public CodeMiningLineContentAnnotation(Position position, boolean preferDrawingLeftToNextChar, ISourceViewer viewer) {
+		super(position, preferDrawingLeftToNextChar, viewer);
 		fResolvedMinings= null;
 		fMinings= new ArrayList<>();
 		fBounds= new ArrayList<>();
