@@ -251,11 +251,12 @@ public class CodeMiningManager implements Runnable {
 			Position pos= new Position(g.getKey().offset, g.getKey().length);
 			List<ICodeMining> minings= g.getValue();
 			boolean inLineHeader= !minings.isEmpty() ? (minings.get(0) instanceof LineHeaderCodeMining) : true;
+			boolean preferDrawingLeftToNextChar= !minings.isEmpty() ? (minings.get(0).getPreferDrawingLeftToNextChar()) : false;
 			// Try to find existing annotation
 			AbstractInlinedAnnotation ann= fInlinedAnnotationSupport.findExistingAnnotation(pos);
 			if (ann == null) {
 				// The annotation doesn't exists, create it.
-				ann= inLineHeader ? new CodeMiningLineHeaderAnnotation(pos, viewer) : new CodeMiningLineContentAnnotation(pos, viewer);
+				ann= inLineHeader ? new CodeMiningLineHeaderAnnotation(pos, viewer) : new CodeMiningLineContentAnnotation(pos, preferDrawingLeftToNextChar, viewer);
 			} else if (ann instanceof ICodeMiningAnnotation && ((ICodeMiningAnnotation) ann).isInVisibleLines()) {
 				// annotation is in visible lines
 				annotationsToRedraw.add((ICodeMiningAnnotation) ann);
